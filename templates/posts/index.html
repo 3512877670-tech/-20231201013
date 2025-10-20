@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Webpage</title>
+    <style>
+        .post {
+            background-color: #77dd11;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        body {
+            padding-bottom: 50px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+    </style>
+    <script src="{% static 'posts/script.js' %}"></script>
+</head>
+<body>
+    <h1>20231201013 - Infinite Scroll Posts</h1>
+    <div id="posts"></div>
+    <div id="loading" class="loading" style="display: none;">Loading more posts...</div>
+</body>
+</html>

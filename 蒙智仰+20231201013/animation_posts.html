@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Animated Posts</title>
+    <style>
+        @keyframes hide {
+            0% {
+                opacity: 1;
+                height: 100%;
+                line-height: 100%;
+                padding: 20px;
+                margin-bottom: 10px;
+            }
+            75% {
+                opacity: 0;
+                height: 100%;
+                line-height: 100%;
+                padding: 20px;
+                margin-bottom: 10px;
+            }
+            100% {
+                opacity: 0;
+                height: 0px;
+                line-height: 0px;
+                padding: 0px;
+                margin-bottom: 0px;
+            }
+        }
+
+        .post {
+            background-color: #77dd11;
+            padding: 20px;
+            margin-bottom: 10px;
+            animation-name: hide;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .hide {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            float: right;
+        }
+
+        .hide:hover {
+            background-color: #cc0000;
+        }
+
+        #new-post {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        #post-content {
+            width: 70%;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        #add-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #add-button:hover {
+            background-color: #45a049;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>20231201013 - Animated Posts</h1>
+    
+    <div id="new-post">
+        <input type="text" id="post-content" placeholder="Enter your post content...">
+        <button id="add-button">Add Post</button>
+    </div>
+    
+    <div id="posts">
+        <!-- Posts will be added here -->
+    </div>
+
+    <script>
+        // Add a new post with given contents to DOM
+        function add_post(contents) {
+            // Create new post
+            const post = document.createElement('div');
+            post.className = 'post';
+            post.innerHTML = `${contents} <button class="hide">Hide</button>`;
+
+            // Add post to DOM
+            document.querySelector('#posts').append(post);
+        }
+
+        // If hide button is clicked, delete the post with animation
+        document.addEventListener('click', event => {
+            // Find what was clicked on
+            const element = event.target;
+
+            // Check if the user clicked on a hide button
+            if (element.className === 'hide') {
+                element.parentElement.style.animationPlayState = 'running';
+                element.parentElement.addEventListener('animationend', () => {
+                    element.parentElement.remove();
+                });
+            }
+        });
+
+        // Add event listener for the add button
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('#add-button').addEventListener('click', function() {
+                const content = document.querySelector('#post-content').value;
+                if (content) {
+                    add_post(content);
+                    document.querySelector('#post-content').value = '';
+                }
+            });
+
+            // Also allow adding posts by pressing Enter
+            document.querySelector('#post-content').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.querySelector('#add-button').click();
+                }
+            });
+
+            // Add some sample posts
+            add_post("This is the first sample post!");
+            add_post("Welcome to our animated posts page!");
+            add_post("Click the Hide button to see the animation effect!");
+        });
+    </script>
+</body>
+</html>
